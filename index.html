@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHOENIX // GHOST ARCHITECT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050505;
+            --accent: #00FFC2; /* Electric Cyan */
+            --glass: rgba(255, 255, 255, 0.03);
+        }
+
+        body {
+            background-color: var(--bg);
+            color: #FFFFFF;
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        .custom-cursor {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+
+        .glass-panel {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+        }
+
+        .kinetic-text {
+            line-height: 0.85;
+            letter-spacing: -0.05em;
+        }
+
+        .page-transition {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--accent);
+            z-index: 10000;
+            transform: translateY(100%);
+        }
+
+        canvas#scene {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        ::-webkit-scrollbar { width: 0px; }
+    </style>
+</head>
+<body>
+
+    <div class="custom-cursor" id="cursor"></div>
+    <div class="page-transition" id="transition"></div>
+    
+    <canvas id="scene"></canvas>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full p-8 z-50 flex justify-between items-center mix-blend-difference">
+        <div class="text-2xl font-black tracking-tighter">PHX/GHOST</div>
+        <div class="hidden md:flex gap-12 font-semibold text-xs tracking-[0.2em] uppercase">
+            <a href="#home" class="nav-link relative py-1" onclick="navigateTo('home')">Origin</a>
+            <a href="#offering" class="nav-link relative py-1" onclick="navigateTo('offering')">Payload</a>
+            <a href="#proof" class="nav-link relative py-1" onclick="navigateTo('proof')">Forensics</a>
+            <a href="#contact" class="nav-link relative py-1" onclick="navigateTo('contact')">Extraction</a>
+        </div>
+        <button class="bg-white text-black px-6 py-2 rounded-full font-bold text-xs uppercase hover:bg-[var(--accent)] transition-colors">Contact</button>
+    </nav>
+
+    <main id="content-wrapper">
+        
+        <!-- PAGE 1: LANDING (ORIGIN) -->
+        <section id="home" class="min-h-screen flex flex-col justify-center px-8 md:px-24">
+            <h1 class="kinetic-text text-[15vw] font-black uppercase" id="hero-text">
+                STEALTH<br><span class="text-[var(--accent)]">WEALTH</span>
+            </h1>
+            <div class="mt-12 max-w-xl text-zinc-400 text-lg leading-relaxed">
+                Annihilating the generic Scottsdale aesthetic. We build digital monoliths for brands that don't need to shout to be heard.
+            </div>
+        </section>
+
+        <!-- PAGE 2: SERVICES (PAYLOAD) -->
+        <section id="offering" class="min-h-screen py-32 px-8 md:px-24">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-24">
+                <h2 class="text-6xl md:text-8xl font-black uppercase leading-[0.8]">THE<br>PAYLOAD</h2>
+                <p class="max-w-xs text-zinc-500 text-sm uppercase tracking-widest mt-8 md:mt-0">Pure performance. No lag. Cinematic fluid mechanics.</p>
+            </div>
+
+            <div class="bento-grid">
+                <div class="col-span-12 md:col-span-8 glass-panel p-12 h-[400px] flex flex-col justify-between group overflow-hidden">
+                    <div class="text-[var(--accent)] font-bold tracking-[0.3em]">01 // ARCHITECTURE</div>
+                    <h3 class="text-5xl font-black group-hover:translate-x-4 transition-transform duration-500">KINETIC FRONT-END</h3>
+                    <p class="text-zinc-500 max-w-md">Mathematical fluid motion using trigonometry and raw physics instead of heavy libraries.</p>
+                </div>
+                <div class="col-span-12 md:col-span-4 glass-panel p-12 h-[400px] bg-white text-black flex flex-col justify-between">
+                    <div class="font-bold tracking-[0.3em]">02 // STRATEGY</div>
+                    <h3 class="text-4xl font-black">STEALTH SCALING</h3>
+                    <p class="opacity-60">High-conversion funnels disguised as luxury editorial experiences.</p>
+                </div>
+                <div class="col-span-12 md:col-span-4 glass-panel p-12 h-[400px] flex flex-col justify-between">
+                    <div class="text-[var(--accent)] font-bold tracking-[0.3em]">03 // VISUALS</div>
+                    <h3 class="text-4xl font-black">4D DEPTH</h3>
+                </div>
+                <div class="col-span-12 md:col-span-8 glass-panel p-12 h-[400px] flex flex-col justify-between border-[var(--accent)] border-opacity-20">
+                    <div class="text-[var(--accent)] font-bold tracking-[0.3em]">04 // LOGIC</div>
+                    <h3 class="text-5xl font-black">AUTONOMOUS SYSTEMS</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 3: CASE STUDY (FORENSICS) -->
+        <section id="proof" class="min-h-screen py-32 bg-zinc-100 text-black px-8 md:px-24">
+            <span class="text-xs font-bold tracking-widest uppercase mb-4 block">Case 091 / Phoenix Sky Harbor Concept</span>
+            <div class="flex flex-col md:flex-row gap-12 items-start">
+                <div class="w-full md:w-1/2 overflow-hidden rounded-3xl h-[600px] bg-zinc-300">
+                    <div class="w-full h-full bg-[url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2070')] bg-cover grayscale hover:grayscale-0 transition-all duration-1000 scale-110 hover:scale-100"></div>
+                </div>
+                <div class="w-full md:w-1/2 pt-12">
+                    <h2 class="text-7xl font-black uppercase leading-none mb-8">BRUTALIST<br>REFINEMENT</h2>
+                    <div class="space-y-6 text-xl">
+                        <p>We took a $20M real estate portfolio and stripped the digital noise. The result was a 400% increase in high-intent inquiries within 30 days.</p>
+                        <p class="text-zinc-400">Strategy: Remove the "Sell." Let the structure speak.</p>
+                        <button class="mt-8 border-b-2 border-black pb-2 font-black uppercase text-sm hover:text-[var(--accent)] hover:border-[var(--accent)] transition-all">View Full Dossier</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 4: CONTACT (EXTRACTION) -->
+        <section id="contact" class="min-h-screen flex items-center justify-center bg-black text-white p-8">
+            <div class="max-w-4xl w-full">
+                <div class="text-center mb-16">
+                    <h2 class="text-6xl md:text-9xl font-black uppercase tracking-tighter italic">READY?</h2>
+                </div>
+                <form class="space-y-12">
+                    <div class="relative group">
+                        <input type="text" placeholder="WHO ARE YOU?" class="w-full bg-transparent border-b-2 border-zinc-800 py-6 text-2xl md:text-4xl outline-none focus:border-[var(--accent)] transition-colors uppercase font-black placeholder-zinc-800">
+                    </div>
+                    <div class="relative group">
+                        <input type="email" placeholder="THE FREQUENCY (EMAIL)" class="w-full bg-transparent border-b-2 border-zinc-800 py-6 text-2xl md:text-4xl outline-none focus:border-[var(--accent)] transition-colors uppercase font-black placeholder-zinc-800">
+                    </div>
+                    <div class="relative group">
+                        <textarea placeholder="THE MISSION" rows="1" class="w-full bg-transparent border-b-2 border-zinc-800 py-6 text-2xl md:text-4xl outline-none focus:border-[var(--accent)] transition-colors uppercase font-black placeholder-zinc-800 resize-none"></textarea>
+                    </div>
+                    <button class="w-full bg-[var(--accent)] text-black font-black py-8 text-2xl uppercase rounded-full hover:scale-[0.98] transition-transform">Initiate Sequence</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // INIT GSAP
+        gsap.registerPlugin(ScrollTrigger);
+
+        // CUSTOM CURSOR
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(cursor, {
+                x: e.clientX,
+                y: e.clientY,
+                duration: 0.1
+            });
+        });
+
+        // THREE.JS SCENE (Aura Effect)
+        function initThree() {
+            const canvas = document.querySelector('#scene');
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+
+            // Simple Particle Field
+            const geo = new THREE.BufferGeometry();
+            const count = 2000;
+            const pos = new Float32Array(count * 3);
+            for(let i=0; i<count*3; i++) {
+                pos[i] = (Math.random() - 0.5) * 15;
+            }
+            geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+            const mat = new THREE.PointsMaterial({ color: 0x00FFC2, size: 0.015 });
+            const points = new THREE.Points(geo, mat);
+            scene.add(points);
+
+            function animate() {
+                requestAnimationFrame(animate);
+                points.rotation.y += 0.001;
+                points.rotation.x += 0.0005;
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            window.addEventListener('resize', () => {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+            });
+        }
+
+        // SCROLL ANIMATIONS
+        function initAnimations() {
+            // Hero Text Entrance
+            gsap.from("#hero-text", {
+                y: 100,
+                opacity: 0,
+                duration: 2,
+                ease: "expo.out",
+                stagger: 0.2
+            });
+
+            // Bento Panels Slide In
+            gsap.utils.toArray('.glass-panel').forEach(panel => {
+                gsap.from(panel, {
+                    scrollTrigger: {
+                        trigger: panel,
+                        start: "top bottom-=100",
+                        toggleActions: "play none none reverse"
+                    },
+                    y: 60,
+                    opacity: 0,
+                    duration: 1.2,
+                    ease: "power4.out"
+                });
+            });
+
+            // Horizontal Scroll for Sections if needed (Logic for narrative flow)
+            gsap.to("#hero-text", {
+                scrollTrigger: {
+                    trigger: "#home",
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: true
+                },
+                x: -500,
+                opacity: 0
+            });
+        }
+
+        // NAVIGATION LOGIC
+        function navigateTo(targetId) {
+            const transition = document.getElementById('transition');
+            gsap.to(transition, {
+                y: "0%",
+                duration: 0.8,
+                ease: "power4.inOut",
+                onComplete: () => {
+                    document.getElementById(targetId).scrollIntoView();
+                    gsap.to(transition, {
+                        y: "-100%",
+                        duration: 0.8,
+                        delay: 0.2,
+                        ease: "power4.inOut",
+                        onComplete: () => {
+                            gsap.set(transition, { y: "100%" });
+                        }
+                    });
+                }
+            });
+        }
+
+        window.onload = () => {
+            initThree();
+            initAnimations();
+        };
+    </script>
+</body>
+</html>
